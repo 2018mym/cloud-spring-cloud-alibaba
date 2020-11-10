@@ -1,5 +1,6 @@
 package com.gwm.cloudcommon.exception;
 
+import io.lettuce.core.dynamic.CommandMethod;
 
 public enum CommonEnum implements BaseErrorInfoInterface {
     SUCCESS(200, "成功!"),
@@ -14,8 +15,7 @@ public enum CommonEnum implements BaseErrorInfoInterface {
     STARTSUCCESS(200, "启动成功"),
     STOPSUCCESS(200, "关闭成功"),
     RESTARTSUCCESS(200, "重启成功"),
-    ATTACHSUCCESS(200, "挂载成功"),
-    DEATTACHSUCCESS(200, "卸载成功"),
+    ATTACHSUCCESS(200, "重启成功"),
     REBUILDSUCCESS(200, "重置成功"),
     REVERTSUCCESS(200, "回滚成功"),
     //    ------------------------ shiro-------------
@@ -35,8 +35,7 @@ public enum CommonEnum implements BaseErrorInfoInterface {
     REIONNOTNULLERROR(300003, "查询条件错误。无region参数"),
     DELETEVOLUMEERROR(300002, "删除磁盘错误，该磁盘已挂载"),
     SNAPSHOTTOTALERROR(300004, "创建快照错误，该卷创建快照大于3个"),
-    VOLUMESIZEERROR(300005, "创建卷错误，卷大小不小于快照大小"),
-    VOLUMETypeERROR(300006, "创建卷错误，缺少云主机参数");
+    VOLUMESIZEERROR(300005, "创建卷错误，卷大小不小于快照大小");
     /**
      * 错误码
      */

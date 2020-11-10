@@ -1,22 +1,28 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>com.gwm</groupId>
-        <artifactId>cloud-platform</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
-    </parent>
-    <artifactId>cloud-streamsets</artifactId>
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.gwm</groupId>
+    <artifactId>cloud-platform</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>cloud-streamsets</name>
-    <description>Demo project for Spring Boot</description>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>streamsets-server</module>
-        <module>streamsets-common</module>
-    </modules>
-
-
+  </parent> 
+  <artifactId>cloud-streamsets</artifactId>  
+  <dependencies>
+  <dependency>
+            <groupId>com.gwm</groupId>
+            <artifactId>cloud-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+      <dependency>
+          <groupId>com.gwm</groupId>
+          <artifactId>cloud-ecs</artifactId>
+          <version>0.0.1-SNAPSHOT</version>
+          <scope>compile</scope>
+      </dependency>
+  </dependencies>
+  <build>
+    <finalName>cloud-streamsets</finalName>
+  </build>
 </project>

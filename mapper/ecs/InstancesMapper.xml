@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gwm.cloudecs.dao.InstancesMapper">
+    <resultMap id="BaseResultMap" type="com.gwm.cloudecs.model.entity.Instances">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="create_at" jdbcType="TIMESTAMP" property="createAt"/>
+        <result column="deleted" jdbcType="INTEGER" property="deleted"/>
+        <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="env" jdbcType="VARCHAR" property="env"/>
+        <result column="flavor_id" jdbcType="VARCHAR" property="flavorId"/>
+        <result column="hostname" jdbcType="VARCHAR" property="hostname"/>
+        <result column="image_uuid" jdbcType="VARCHAR" property="imageUuid"/>
+        <result column="ip_addr" jdbcType="VARCHAR" property="ipAddr"/>
+        <result column="memory_mb" jdbcType="INTEGER" property="memoryMb"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="os_type" jdbcType="VARCHAR" property="osType"/>
+        <result column="project_id" jdbcType="VARCHAR" property="projectId"/>
+        <result column="region" jdbcType="VARCHAR" property="region"/>
+        <result column="root_gb" jdbcType="INTEGER" property="rootGb"/>
+        <result column="state" jdbcType="INTEGER" property="state"/>
+        <result column="network" jdbcType="VARCHAR" property="network"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="uuid" jdbcType="VARCHAR" property="uuid"/>
+        <result column="vcpus" jdbcType="INTEGER" property="vcpus"/>
+        <result column="zone" jdbcType="VARCHAR" property="zone"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, create_at, deleted, deleted_at, description, env, flavor_id, hostname, image_uuid,
+    ip_addr, memory_mb, name, os_type, project_id, region, root_gb, state, network, type, 
+    update_at, user_id, uuid, vcpus, zone
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from instances
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="getInstancesList" parameterType="com.gwm.cloudecs.model.DTO.InstancesListDTO" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from instances
+        where env = #{env} and deleted = 0
+        <if test="name != null and name != ''">
+            <bind name="name" value="'%' + name + '%'"/>
+            and `name` like #{name}
+        </if>
+        <if test="env != null and env != ''">
+            and env = #{env}
+        </if>
+        <if test="type != null and type != ''">
+            and `type` = #{type}
+        </if>
+        <if test="zone != null and zone != ''">
+            and `zone` = #{zone}
+        </if>
+        <if test="region != null and region != ''">
+            and `region` = #{region}
+        </if>
+        <if test="groupId != null and groupId != ''">
+            and `project_id` = #{groupId}
+        </if>
+        order by create_at DESC
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from instances
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.gwm.cloudecs.model.entity.Instances">
+    insert into instances (id, create_at, deleted, 
+      deleted_at, description, env, 
+      flavor_id, hostname, image_uuid, 
+      ip_addr, memory_mb, name, 
+      os_type, project_id, region, 
+      root_gb, state, network, 
+      type, update_at, user_id, 
+      uuid, vcpus, zone)
+    values (#{id,jdbcType=INTEGER}, now(), 0,
+      #{deletedAt,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR}, #{env,jdbcType=VARCHAR}, 
+      #{flavorId,jdbcType=VARCHAR}, #{hostname,jdbcType=VARCHAR}, #{imageUuid,jdbcType=VARCHAR}, 
+      #{ipAddr,jdbcType=VARCHAR}, #{memoryMb,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{osType,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, 
+      #{rootGb,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{network,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{updateAt,jdbcType=TIMESTAMP}, #{userId,jdbcType=VARCHAR}, 
+      #{uuid,jdbcType=VARCHAR}, #{vcpus,jdbcType=INTEGER}, #{zone,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.gwm.cloudecs.model.entity.Instances">
+        insert into instances
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="createAt != null">
+                create_at,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="deletedAt != null">
+                deleted_at,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="env != null">
+                env,
+            </if>
+            <if test="flavorId != null">
+                flavor_id,
+            </if>
+            <if test="hostname != null">
+                hostname,
+            </if>
+            <if test="imageUuid != null">
+                image_uuid,
+            </if>
+            <if test="ipAddr != null">
+                ip_addr,
+            </if>
+            <if test="memoryMb != null">
+                memory_mb,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="osType != null">
+                os_type,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+            <if test="region != null">
+                region,
+            </if>
+            <if test="rootGb != null">
+                root_gb,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="network != null">
+                network,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="updateAt != null">
+                update_at,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="uuid != null">
+                uuid,
+            </if>
+            <if test="vcpus != null">
+                vcpus,
+            </if>
+            <if test="zone != null">
+                zone,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="createAt != null">
+                #{createAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=INTEGER},
+            </if>
+            <if test="deletedAt != null">
+                #{deletedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="env != null">
+                #{env,jdbcType=VARCHAR},
+            </if>
+            <if test="flavorId != null">
+                #{flavorId,jdbcType=VARCHAR},
+            </if>
+            <if test="hostname != null">
+                #{hostname,jdbcType=VARCHAR},
+            </if>
+            <if test="imageUuid != null">
+                #{imageUuid,jdbcType=VARCHAR},
+            </if>
+            <if test="ipAddr != null">
+                #{ipAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="memoryMb != null">
+                #{memoryMb,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="osType != null">
+                #{osType,jdbcType=VARCHAR},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=VARCHAR},
+            </if>
+            <if test="region != null">
+                #{region,jdbcType=VARCHAR},
+            </if>
+            <if test="rootGb != null">
+                #{rootGb,jdbcType=INTEGER},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER},
+            </if>
+            <if test="network != null">
+                #{network,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="updateAt != null">
+                #{updateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="uuid != null">
+                #{uuid,jdbcType=VARCHAR},
+            </if>
+            <if test="vcpus != null">
+                #{vcpus,jdbcType=INTEGER},
+            </if>
+            <if test="zone != null">
+                #{zone,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.gwm.cloudecs.model.entity.Instances">
+        update instances
+        <set>
+            <if test="createAt != null">
+                create_at = #{createAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=INTEGER},
+            </if>
+            <if test="deletedAt != null">
+                deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="env != null">
+                env = #{env,jdbcType=VARCHAR},
+            </if>
+            <if test="flavorId != null">
+                flavor_id = #{flavorId,jdbcType=VARCHAR},
+            </if>
+            <if test="hostname != null">
+                hostname = #{hostname,jdbcType=VARCHAR},
+            </if>
+            <if test="imageUuid != null">
+                image_uuid = #{imageUuid,jdbcType=VARCHAR},
+            </if>
+            <if test="ipAddr != null">
+                ip_addr = #{ipAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="memoryMb != null">
+                memory_mb = #{memoryMb,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="osType != null">
+                os_type = #{osType,jdbcType=VARCHAR},
+            </if>
+            <if test="projectId != null">
+                project_id = #{projectId,jdbcType=VARCHAR},
+            </if>
+            <if test="region != null">
+                region = #{region,jdbcType=VARCHAR},
+            </if>
+            <if test="rootGb != null">
+                root_gb = #{rootGb,jdbcType=INTEGER},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="network != null">
+                network = #{network,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="updateAt != null">
+                update_at = #{updateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="uuid != null">
+                uuid = #{uuid,jdbcType=VARCHAR},
+            </if>
+            <if test="vcpus != null">
+                vcpus = #{vcpus,jdbcType=INTEGER},
+            </if>
+            <if test="zone != null">
+                zone = #{zone,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.gwm.cloudecs.model.entity.Instances">
+    update instances
+    set create_at = #{createAt,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=INTEGER},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      description = #{description,jdbcType=VARCHAR},
+      env = #{env,jdbcType=VARCHAR},
+      flavor_id = #{flavorId,jdbcType=VARCHAR},
+      hostname = #{hostname,jdbcType=VARCHAR},
+      image_uuid = #{imageUuid,jdbcType=VARCHAR},
+      ip_addr = #{ipAddr,jdbcType=VARCHAR},
+      memory_mb = #{memoryMb,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      os_type = #{osType,jdbcType=VARCHAR},
+      project_id = #{projectId,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
+      root_gb = #{rootGb,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      network = #{network,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      update_at = #{updateAt,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=VARCHAR},
+      uuid = #{uuid,jdbcType=VARCHAR},
+      vcpus = #{vcpus,jdbcType=INTEGER},
+      zone = #{zone,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <update id="updateInstanceStatus">
+    update instances
+    set
+      state = #{state},
+      update_at = now()
+    where  uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+    <select id="selectByUuid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from instances
+        where uuid = #{instanceId}
+    </select>
+
+    <select id="totalInstanceByProjectId" resultType="com.gwm.cloudecs.model.VO.InstanceTotalListVO"
+            parameterType="com.gwm.cloudecs.model.DTO.ResourceTotalListDTO">
+        select
+        sum(vcpus) as vcpus,
+        sum(memory_mb) as memory,
+        count(id) as instanceConut
+        from instances
+        where deleted = '0'
+        <if test="env != null and env != ''">
+            and env = #{env}
+        </if>
+        <if test="region != null and region != ''">
+            and region = #{region}
+        </if>
+        <if test="groupId != null and groupId != ''">
+            and project_id = #{groupId}
+        </if>
+        group by project_id
+    </select>
+ <select id="selectByIpaddr" resultType="int">
+        select
+        1
+        from instances
+        where deleted = 0  and project_id = #{projectId}
+        <if test="uuid != null and uuid != ''">
+            and uuid = #{uuid}
+        </if>
+        <if test="ipaddr != null and ipaddr != ''">
+            and ip_addr = #{ipaddr}
+        </if>
+        limit 1
+    </select>
+
+
+</mapper>

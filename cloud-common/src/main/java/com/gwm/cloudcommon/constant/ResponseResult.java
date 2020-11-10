@@ -1,9 +1,6 @@
 package com.gwm.cloudcommon.constant;
 
 
-
-
-
 import com.gwm.cloudcommon.exception.CommonEnum;
 
 import java.io.Serializable;

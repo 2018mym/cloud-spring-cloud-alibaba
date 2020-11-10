@@ -12,7 +12,6 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
 /**
  * redis配置类
  * @author ZENG.XIAO.YAN
@@ -22,7 +21,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 //配置类注解，被自动扫描发现
 @Configuration
 @EnableCaching
-//@PropertySource({"file:config/redis.properties"})
+@PropertySource({"file:config/redis.properties"})
 public class RedisConfig extends CachingConfigurerSupport {
 
     public RedisConfig() {

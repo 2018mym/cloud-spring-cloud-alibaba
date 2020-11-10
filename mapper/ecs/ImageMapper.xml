@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gwm.cloudecs.dao.ImageMapper">
+  <resultMap id="BaseResultMap" type="com.gwm.cloudecs.model.entity.Image">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="disk_format" jdbcType="VARCHAR" property="diskFormat" />
+    <result column="env" jdbcType="VARCHAR" property="env" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="project_id" jdbcType="VARCHAR" property="projectId" />
+    <result column="region" jdbcType="VARCHAR" property="region" />
+    <result column="os_type" jdbcType="VARCHAR" property="osType" />
+    <result column="size" jdbcType="INTEGER" property="size" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="visibility" jdbcType="VARCHAR" property="visibility" />
+    <result column="zone" jdbcType="VARCHAR" property="zone" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_at, deleted, deleted_at, description, disk_format, env, name, project_id, 
+    region, os_type, size, state, type, update_at, user_id, uuid, visibility, zone
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from image
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from image
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gwm.cloudecs.model.entity.Image">
+    insert into image (id, create_at, deleted, 
+      deleted_at, description, disk_format, 
+      env, name, project_id, 
+      region, os_type, size, 
+      state, type, update_at, 
+      user_id, uuid, visibility, 
+      zone)
+    values (#{id,jdbcType=INTEGER}, #{createAt,jdbcType=TIMESTAMP}, #{deleted,jdbcType=INTEGER}, 
+      #{deletedAt,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR}, #{diskFormat,jdbcType=VARCHAR}, 
+      #{env,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, 
+      #{region,jdbcType=VARCHAR}, #{osType,jdbcType=VARCHAR}, #{size,jdbcType=INTEGER}, 
+      #{state,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{updateAt,jdbcType=TIMESTAMP}, 
+      #{userId,jdbcType=VARCHAR}, #{uuid,jdbcType=VARCHAR}, #{visibility,jdbcType=VARCHAR}, 
+      #{zone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gwm.cloudecs.model.entity.Image">
+    insert into image
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="deletedAt != null">
+        deleted_at,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="diskFormat != null">
+        disk_format,
+      </if>
+      <if test="env != null">
+        env,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="region != null">
+        region,
+      </if>
+      <if test="osType != null">
+        os_type,
+      </if>
+      <if test="size != null">
+        size,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="visibility != null">
+        visibility,
+      </if>
+      <if test="zone != null">
+        zone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="deletedAt != null">
+        #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="diskFormat != null">
+        #{diskFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="env != null">
+        #{env,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null">
+        #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null">
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="osType != null">
+        #{osType,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        #{size,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="visibility != null">
+        #{visibility,jdbcType=VARCHAR},
+      </if>
+      <if test="zone != null">
+        #{zone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gwm.cloudecs.model.entity.Image">
+    update image
+    <set>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="deletedAt != null">
+        deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="diskFormat != null">
+        disk_format = #{diskFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="env != null">
+        env = #{env,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null">
+        project_id = #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null">
+        region = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="osType != null">
+        os_type = #{osType,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        size = #{size,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="uuid != null">
+        uuid = #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="visibility != null">
+        visibility = #{visibility,jdbcType=VARCHAR},
+      </if>
+      <if test="zone != null">
+        zone = #{zone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gwm.cloudecs.model.entity.Image">
+    update image
+    set create_at = #{createAt,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=INTEGER},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      description = #{description,jdbcType=VARCHAR},
+      disk_format = #{diskFormat,jdbcType=VARCHAR},
+      env = #{env,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      project_id = #{projectId,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
+      os_type = #{osType,jdbcType=VARCHAR},
+      size = #{size,jdbcType=INTEGER},
+      state = #{state,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      update_at = #{updateAt,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=VARCHAR},
+      uuid = #{uuid,jdbcType=VARCHAR},
+      visibility = #{visibility,jdbcType=VARCHAR},
+      zone = #{zone,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getImageList" resultMap="BaseResultMap" parameterType="com.gwm.cloudecs.model.DTO.ImageListDTO">
+    select
+    <include refid="Base_Column_List" />
+    from image
+    where deleted = '0'
+    <if test="name != null and name != ''">
+      <bind name="name" value="'%' + name + '%'"/>
+      and  name like #{name}
+    </if>
+    <if test="env != null and env != ''">
+      <bind name="env" value="'%' + env + '%'"/>
+      and  env like #{env}
+    </if>
+    <if test="region != null and region != ''">
+      <bind name="region" value="'%' + region + '%'"/>
+      and  region like #{region}
+    </if>
+    <if test="visibility != null and visibility != ''">
+      and  visibility  = #{visibility}
+    </if>
+  </select>
+  <select id="getRecordByUUid"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from image
+    where uuid = #{uuid}
+  </select>
+
+  <select id="totalImageByProjectId" resultType="com.gwm.cloudecs.model.VO.ImageTotalListVO"  parameterType="com.gwm.cloudecs.model.DTO.ResourceTotalListDTO">
+  select
+  sum(size) as size,
+  count(id) as imageCount
+  from  image
+  where deleted = 0
+  <if test="env != null and env != ''">
+    and  env = #{env}
+  </if>
+  <if test="region != null and region != ''">
+    and  region = #{region}
+  </if>
+  <if test="groupId != null and groupId != ''">
+    and   project_id = #{groupId}
+  </if>
+  group by project_id
+  </select>
+</mapper>

@@ -63,7 +63,7 @@ public class DateUtil {
     /*
      * 判时间差距，两个时间相差多少天，时，分，秒
      */
-    public static Long getDiffHours(Date currentDate,Date pastDate) {
+    public static Long getDiffMinutes(Date currentDate,Date pastDate) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Long days = null;
         try {
@@ -72,7 +72,7 @@ public class DateUtil {
             //System.out.println("currentTime"+parseStr(currentTime));
             //System.out.println("pastDate"+parseStr(pastTime));
             long diff = currentTime.getTime() - pastTime.getTime();
-            days = diff/(1000*60*60); //按小时比较
+            days = diff/(1000*60); //按分钟比较
             //System.out.println("diff:"+days);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -102,7 +102,7 @@ public class DateUtil {
     
     
     public static void main(String args[]){
-        //System.out.println(getDiffMinutes(new Date(),new Date()));
+
     }
     
     

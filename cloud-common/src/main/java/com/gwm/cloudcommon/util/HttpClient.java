@@ -1,9 +1,9 @@
 package com.gwm.cloudcommon.util;
 
 
+
 import com.alibaba.fastjson.JSONObject;
 import com.gwm.cloudcommon.exception.CommonCustomException;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -12,18 +12,14 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 
-@Slf4j
 public class HttpClient {
 
     static HttpConnectionManager httpConnectionManager = null;
@@ -54,55 +50,6 @@ public class HttpClient {
 
         return responseBody;
     }
-
-
-    public static String httpsGet(String url) throws Exception {
-        String responseBody = "";
-        CloseableHttpClient httpclient = new SSLClient();
-        CloseableHttpResponse response = null;
-        try {
-            HttpGet httpget = new HttpGet(url);
-            response = httpclient.execute(httpget);
-            // 获得响应的实体对象
-            HttpEntity entity = response.getEntity();
-            // 使用Apache提供的工具类进行转换成字符串
-            responseBody = EntityUtils.toString(entity, "UTF-8");
-        } finally {
-            if (response != null) {
-                response.close();
-            }
-        }
-        return responseBody;
-    }
-
-   public static String httpsPost(String url, List<NameValuePair> params) throws Exception {
-
-        String responseBody = "";
-        CloseableHttpClient httpclient = new SSLClient();
-        CloseableHttpResponse response = null;
-        try {
-            HttpPost httpPost = new HttpPost(url);
-            httpPost.addHeader("Content-Type", "application/x-www-form-urlencoded");
-
-            httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
-            response = httpclient.execute(httpPost);
-            // 获得响应的实体对象
-            HttpEntity entity = response.getEntity();
-            // 使用Apache提供的工具类进行转换成字符串
-            responseBody = EntityUtils.toString(entity, "UTF-8");
-
-        } finally {
-            if (response != null) {
-                response.close();
-            }
-        }
-
-        return responseBody;
-
-    }
-
-
-
     public static String get(String url, Map<String, String> header) throws IOException {
 
         String responseBody = "";
@@ -133,10 +80,9 @@ public class HttpClient {
 
         return responseBody;
     }
-
     public static JSONObject getEcs(String url) {
         try {
-            String get = get(url);
+            String get  = get(url);
             JSONObject parse = (JSONObject) JSONObject.parse(get);
             Integer code = parse.getInteger("ret_code");
             if (200 <= code && code < 300) {
@@ -145,13 +91,12 @@ public class HttpClient {
                 throw new CommonCustomException(code, parse.getString("ret_str"));
             }
         } catch (IOException e) {
-            log.error(e.getMessage(), e);
+           LogUtil.error(e.getMessage(), e);
             throw new CommonCustomException(-1, "IO异常！");
         }
 
 
     }
-
     public static String post(String url, List<NameValuePair> params)
             throws IOException {
 
@@ -187,7 +132,6 @@ public class HttpClient {
         }
 
     }
-
     public static String post(String url, String data) throws IOException {
 
         String responseBody = "";
@@ -288,8 +232,8 @@ public class HttpClient {
 
     public static void main(String[] args) {
         try {
-            UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(null, "UTF-8");
-            System.out.println(111);
+         UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(null, "UTF-8");
+         System.out.println(111);
 //            String s = get("http://10.255.128.100:8080/bcp/v1/instance/list");
 //            String s = "{\"uuid\":\"017fe4b1-d5c6-413f-9954-bcc1ea91b6bf\",\"restart_flag\":\"SOFT\"}";
 //            String post = post("http://10.255.128.100:8080/bcp/v1/instance/restart", s);
@@ -310,10 +254,7 @@ public class HttpClient {
 
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-
 
     }
 }

@@ -3,6 +3,7 @@ package com.gwm.cloudcommon.util;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
+import org.apache.http.config.SocketConfig;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.LayeredConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
@@ -58,8 +59,8 @@ public class HttpConnectionManager {
          * request请求相关配置
          */
         RequestConfig defaultRequestConfig = RequestConfig.custom()
-                .setConnectTimeout(60 * 1000)         //连接超时时间
-                .setSocketTimeout(60 * 1000)          //读超时时间（等待数据超时时间）
+                .setConnectTimeout(30 * 1000)         //连接超时时间
+                .setSocketTimeout(30 * 1000)          //读超时时间（等待数据超时时间）
                 .setConnectionRequestTimeout(500)    //从池中获取连接超时时间
                 .build();
 

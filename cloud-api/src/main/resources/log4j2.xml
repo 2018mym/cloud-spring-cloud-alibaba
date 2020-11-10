@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+<!--status="WARN" :用于设置log4j2自身内部日志的信息输出级别，默认是OFF-->
+<!--monitorInterval="30"  :间隔秒数,自动检测配置文件的变更和重新配置本身-->
+<Configuration status="warn" monitorInterval="60" strict="true">
+    <properties>
+        <!--自定义一些常量，之后使用${变量名}引用-->
+        <property name="logpath">logs/</property>
+        <property name="charset">UTF-8</property>
+        <!--自定义的输出格式-->
+<!--        <property name="pattern">%-d{yyyy-MM-dd HH:mm:ss.SSS}@@%p@@%X{ip}@@%t %C@@%X{requestId} %M %m %n </property>-->
+        <property name="pattern">%d{HH:mm:ss.SSS} [%t] %-5level %logger{80} - %msg%n</property>
+    </properties>
+    <!--appenders:定义输出内容,输出格式,输出方式,日志保存策略等,常用其下三种标签[console,File,RollingFile]-->
+    <!--Appender可以理解为日志的输出目的地-->
+    <appenders>
+        <!--console :控制台输出的配置-->
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${pattern}" charset="${charset}"/>
+        </Console>
+        <RollingFile name="rollingFile" fileName="logs/system.log" filePattern="logs/$${date:yyyy-MM}/system-%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout pattern="${pattern}"/>
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="log" maxDepth="2">
+                    <IfFileName glob="*/*.log.gz" />
+                    <IfLastModified age="7d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <RollingFile name="rollingFileAll" fileName="logs/system_all.log" filePattern="logs/$${date:yyyy-MM}/system_all-%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout pattern="${pattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="log" maxDepth="2">
+                    <IfFileName glob="*/*.log.gz" />
+                    <IfLastModified age="7d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <!--RollingRandomAccessFile性能比RollingFile提升官网宣称是20-200%-->
+<!--        <RollingRandomAccessFile name="system" immediateFlush="true" bufferSize="4096"-->
+<!--                                 fileName="${logpath}/system.log"-->
+<!--                                 filePattern="${logpath}/system.log.%d{yyyy-MM-dd}.gz"-->
+<!--                                 ignoreExceptions="false">-->
+<!--            &lt;!&ndash;引用上面自定义的输出格式&ndash;&gt;-->
+<!--            <PatternLayout pattern="${pattern}" charset="${charset}"/>-->
+
+<!--            &lt;!&ndash; DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件&ndash;&gt;-->
+<!--            <DefaultRolloverStrategy>-->
+<!--                <Delete basePath="/logs" maxDepth="2" followLinks="true">-->
+<!--                    <IfFileName glob="system.log.*.gz"/>-->
+<!--                    &lt;!&ndash;只保留7天，超过则删除&ndash;&gt;-->
+<!--                    <IfLastModified age="7d"/>-->
+<!--                </Delete>-->
+<!--            </DefaultRolloverStrategy>-->
+<!--        </RollingRandomAccessFile>-->
+<!--        <File name="MyTestLog"  fileName="logs/system2.log" immediateFlush="true" append="true">-->
+<!--            <PatternLayout pattern="%d{yy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />-->
+<!--        </File>-->
+    </appenders>
+
+    <!--然后定义logger，只有定义了logger并引入的appender，appender才会生效-->
+    <loggers>
+<!--        &lt;!&ndash;additivity="false"表示在该logger中输出的日志不会再延伸到父层logger。这里如果改为true，则会延伸到Root Logger，遵循Root Logger的配置也输出一次。&ndash;&gt;-->
+<!--        <Logger additivity="false" name="system" level="INFO">-->
+<!--            <AppenderRef ref="system"/>-->
+<!--        </Logger>-->
+
+        <!--Logger节点用来单独指定日志的形式，name为包路径,比如要为org.apache包下所有日志指定为INFO级别等。 -->
+<!--        <Logger additivity="false" name="console" level="INFO">-->
+<!--            <AppenderRef ref="console"/>-->
+<!--        </Logger>-->
+
+        <!-- 在开发和测试环境启用,输出sql -->
+<!--        <Logger additivity="true" name="com.YZY.mapper" level="DEBUG"></Logger>-->
+        <!-- Root节点用来指定项目的根日志，如果没有单独指定Logger，那么就会默认使用该Root日志输出 -->
+        <Root level="debug">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="rollingFile"/>
+            <AppenderRef ref="rollingFileAll"/>
+        </Root>
+    </loggers>
+</Configuration>

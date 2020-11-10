@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gwm.cloudecs.dao.CloudOrderMapper">
+  <resultMap id="BaseResultMap" type="com.gwm.cloudecs.model.entity.CloudOrder">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="submitName" jdbcType="VARCHAR" property="submitname" />
+    <result column="submitCode" jdbcType="VARCHAR" property="submitcode" />
+    <result column="submitDate" jdbcType="TIMESTAMP" property="submitdate" />
+    <result column="auditName" jdbcType="VARCHAR" property="auditname" />
+    <result column="auditCode" jdbcType="VARCHAR" property="auditcode" />
+    <result column="auditDate" jdbcType="TIMESTAMP" property="auditdate" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="rejectReason" jdbcType="VARCHAR" property="rejectreason" />
+    <result column="workflowId" jdbcType="VARCHAR" property="workflowid" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.gwm.cloudecs.model.entity.CloudOrder">
+    <result column="params" jdbcType="LONGVARCHAR" property="params" />
+    <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
+  </resultMap>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, uuid, type, submitName, submitCode, submitDate, auditName, auditCode, auditDate, 
+    status, rejectReason, workflowId
+  </sql>
+  <sql id="Blob_Column_List">
+    params,detail
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cloud_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cloud_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.gwm.cloudecs.model.entity.CloudOrder">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into cloud_order (uuid, type, submitName, 
+      submitCode, submitDate, auditName, 
+      auditCode, auditDate, status, 
+      rejectReason, workflowId, params,detail
+      )
+    values (#{uuid,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{submitname,jdbcType=VARCHAR}, 
+      #{submitcode,jdbcType=VARCHAR}, #{submitdate,jdbcType=TIMESTAMP}, #{auditname,jdbcType=VARCHAR}, 
+      #{auditcode,jdbcType=VARCHAR}, #{auditdate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
+      #{rejectreason,jdbcType=VARCHAR}, #{workflowid,jdbcType=VARCHAR}, #{params,jdbcType=LONGVARCHAR}
+    , #{detail,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gwm.cloudecs.model.entity.CloudOrder">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into cloud_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="submitname != null">
+        submitName,
+      </if>
+      <if test="submitcode != null">
+        submitCode,
+      </if>
+      <if test="submitdate != null">
+        submitDate,
+      </if>
+      <if test="auditname != null">
+        auditName,
+      </if>
+      <if test="auditcode != null">
+        auditCode,
+      </if>
+      <if test="auditdate != null">
+        auditDate,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="rejectreason != null">
+        rejectReason,
+      </if>
+      <if test="workflowid != null">
+        workflowId,
+      </if>
+      <if test="params != null">
+      params,
+      </if>
+      <if test="detail != null">
+        detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="submitname != null">
+        #{submitname,jdbcType=VARCHAR},
+      </if>
+      <if test="submitcode != null">
+        #{submitcode,jdbcType=VARCHAR},
+      </if>
+      <if test="submitdate != null">
+        #{submitdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditname != null">
+        #{auditname,jdbcType=VARCHAR},
+      </if>
+      <if test="auditcode != null">
+        #{auditcode,jdbcType=VARCHAR},
+      </if>
+      <if test="auditdate != null">
+        #{auditdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="rejectreason != null">
+        #{rejectreason,jdbcType=VARCHAR},
+      </if>
+      <if test="workflowid != null">
+        #{workflowid,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null">
+        #{params,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="detail != null">
+        #{detail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cloud_order
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.uuid != null">
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.submitname != null">
+        submitName = #{record.submitname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.submitcode != null">
+        submitCode = #{record.submitcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.submitdate != null">
+        submitDate = #{record.submitdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.auditname != null">
+        auditName = #{record.auditname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditcode != null">
+        auditCode = #{record.auditcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditdate != null">
+        auditDate = #{record.auditdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.rejectreason != null">
+        rejectReason = #{record.rejectreason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workflowid != null">
+        workflowId = #{record.workflowid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.params != null">
+        params = #{record.params,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.detail != null">
+        params = #{record.detail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update cloud_order
+    set id = #{record.id,jdbcType=BIGINT},
+      uuid = #{record.uuid,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      submitName = #{record.submitname,jdbcType=VARCHAR},
+      submitCode = #{record.submitcode,jdbcType=VARCHAR},
+      submitDate = #{record.submitdate,jdbcType=TIMESTAMP},
+      auditName = #{record.auditname,jdbcType=VARCHAR},
+      auditCode = #{record.auditcode,jdbcType=VARCHAR},
+      auditDate = #{record.auditdate,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=INTEGER},
+      rejectReason = #{record.rejectreason,jdbcType=VARCHAR},
+      workflowId = #{record.workflowid,jdbcType=VARCHAR},
+      detail = #{record.detail,jdbcType=LONGVARCHAR},
+      params = #{record.params,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cloud_order
+    set id = #{record.id,jdbcType=BIGINT},
+      uuid = #{record.uuid,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      submitName = #{record.submitname,jdbcType=VARCHAR},
+      submitCode = #{record.submitcode,jdbcType=VARCHAR},
+      submitDate = #{record.submitdate,jdbcType=TIMESTAMP},
+      auditName = #{record.auditname,jdbcType=VARCHAR},
+      auditCode = #{record.auditcode,jdbcType=VARCHAR},
+      auditDate = #{record.auditdate,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=INTEGER},
+      rejectReason = #{record.rejectreason,jdbcType=VARCHAR},
+      workflowId = #{record.workflowid,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gwm.cloudecs.model.entity.CloudOrder">
+    update cloud_order
+    <set>
+      <if test="uuid != null">
+        uuid = #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="submitname != null">
+        submitName = #{submitname,jdbcType=VARCHAR},
+      </if>
+      <if test="submitcode != null">
+        submitCode = #{submitcode,jdbcType=VARCHAR},
+      </if>
+      <if test="submitdate != null">
+        submitDate = #{submitdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditname != null">
+        auditName = #{auditname,jdbcType=VARCHAR},
+      </if>
+      <if test="auditcode != null">
+        auditCode = #{auditcode,jdbcType=VARCHAR},
+      </if>
+      <if test="auditdate != null">
+        auditDate = #{auditdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="rejectreason != null">
+        rejectReason = #{rejectreason,jdbcType=VARCHAR},
+      </if>
+      <if test="workflowid != null">
+        workflowId = #{workflowid,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null">
+        params = #{params,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="params != null">
+        params = #{params,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gwm.cloudecs.model.entity.CloudOrder">
+    update cloud_order
+    set uuid = #{uuid,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      submitName = #{submitname,jdbcType=VARCHAR},
+      submitCode = #{submitcode,jdbcType=VARCHAR},
+      submitDate = #{submitdate,jdbcType=TIMESTAMP},
+      auditName = #{auditname,jdbcType=VARCHAR},
+      auditCode = #{auditcode,jdbcType=VARCHAR},
+      auditDate = #{auditdate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      rejectReason = #{rejectreason,jdbcType=VARCHAR},
+      workflowId = #{workflowid,jdbcType=VARCHAR},
+      detail = #{detail,jdbcType=LONGVARCHAR},
+      params = #{params,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gwm.cloudecs.model.entity.CloudOrder">
+    update cloud_order
+    set uuid = #{uuid,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      submitName = #{submitname,jdbcType=VARCHAR},
+      submitCode = #{submitcode,jdbcType=VARCHAR},
+      submitDate = #{submitdate,jdbcType=TIMESTAMP},
+      auditName = #{auditname,jdbcType=VARCHAR},
+      auditCode = #{auditcode,jdbcType=VARCHAR},
+      auditDate = #{auditdate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      rejectReason = #{rejectreason,jdbcType=VARCHAR},
+      workflowId = #{workflowid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
