@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gwm.cloudecs.dao.HibernateSequencesMapper">
+  <resultMap id="BaseResultMap" type="com.gwm.cloudecs.model.entity.HibernateSequences">
+    <id column="sequence_name" jdbcType="VARCHAR" property="sequenceName" />
+    <result column="sequence_next_hi_value" jdbcType="BIGINT" property="sequenceNextHiValue" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sequence_name, sequence_next_hi_value
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hibernate_sequences
+    where sequence_name = #{sequenceName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from hibernate_sequences
+    where sequence_name = #{sequenceName,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.gwm.cloudecs.model.entity.HibernateSequences">
+    insert into hibernate_sequences (sequence_name, sequence_next_hi_value)
+    values (#{sequenceName,jdbcType=VARCHAR}, #{sequenceNextHiValue,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gwm.cloudecs.model.entity.HibernateSequences">
+    insert into hibernate_sequences
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sequenceName != null">
+        sequence_name,
+      </if>
+      <if test="sequenceNextHiValue != null">
+        sequence_next_hi_value,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sequenceName != null">
+        #{sequenceName,jdbcType=VARCHAR},
+      </if>
+      <if test="sequenceNextHiValue != null">
+        #{sequenceNextHiValue,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gwm.cloudecs.model.entity.HibernateSequences">
+    update hibernate_sequences
+    <set>
+      <if test="sequenceNextHiValue != null">
+        sequence_next_hi_value = #{sequenceNextHiValue,jdbcType=BIGINT},
+      </if>
+    </set>
+    where sequence_name = #{sequenceName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gwm.cloudecs.model.entity.HibernateSequences">
+    update hibernate_sequences
+    set sequence_next_hi_value = #{sequenceNextHiValue,jdbcType=BIGINT}
+    where sequence_name = #{sequenceName,jdbcType=VARCHAR}
+  </update>
+</mapper>

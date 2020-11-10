@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gwm.cloudecs.dao.FlavorMapper">
+  <resultMap id="BaseResultMap" type="com.gwm.cloudecs.model.entity.Flavor">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="memory_mb" jdbcType="INTEGER" property="memoryMb" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="root_gb" jdbcType="INTEGER" property="rootGb" />
+    <result column="swap" jdbcType="INTEGER" property="swap" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="vcpus" jdbcType="INTEGER" property="vcpus" />
+    <result column="region" jdbcType="VARCHAR" property="region" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_at, deleted, deleted_at, description, memory_mb, name, root_gb, swap, type,
+    update_at, uuid, vcpus, region
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from flavor
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getRecordByUUid"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from flavor
+    where uuid = #{flavorUuid}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from flavor
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gwm.cloudecs.model.entity.Flavor">
+    insert into flavor (id, create_at, deleted, 
+      deleted_at, description, memory_mb,
+      name, root_gb, swap, 
+      type, update_at, uuid, 
+      vcpus, region)
+    values (#{id,jdbcType=INTEGER}, #{createAt,jdbcType=TIMESTAMP}, #{deleted,jdbcType=INTEGER}, 
+      #{deletedAt,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR}, #{memoryMb,jdbcType=INTEGER},
+      #{name,jdbcType=VARCHAR}, #{rootGb,jdbcType=INTEGER}, #{swap,jdbcType=INTEGER}, 
+      #{type,jdbcType=VARCHAR}, #{updateAt,jdbcType=TIMESTAMP}, #{uuid,jdbcType=VARCHAR}, 
+      #{vcpus,jdbcType=INTEGER}, #{region,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gwm.cloudecs.model.entity.Flavor">
+    insert into flavor
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="deletedAt != null">
+        deleted_at,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="memoryMb != null">
+        memory_mb,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="rootGb != null">
+        root_gb,
+      </if>
+      <if test="swap != null">
+        swap,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="vcpus != null">
+        vcpus,
+      </if>
+      <if test="region != null">
+        region,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="deletedAt != null">
+        #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="memoryMb != null">
+        #{memoryMb,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="rootGb != null">
+        #{rootGb,jdbcType=INTEGER},
+      </if>
+      <if test="swap != null">
+        #{swap,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="vcpus != null">
+        #{vcpus,jdbcType=INTEGER},
+      </if>
+      <if test="region != null">
+        #{region,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gwm.cloudecs.model.entity.Flavor">
+    update flavor
+    <set>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="deletedAt != null">
+        deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="memoryMb != null">
+        memory_mb = #{memoryMb,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="rootGb != null">
+        root_gb = #{rootGb,jdbcType=INTEGER},
+      </if>
+      <if test="swap != null">
+        swap = #{swap,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uuid != null">
+        uuid = #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="vcpus != null">
+        vcpus = #{vcpus,jdbcType=INTEGER},
+      </if>
+      <if test="region != null">
+        region = #{region,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gwm.cloudecs.model.entity.Flavor">
+    update flavor
+    set create_at = #{createAt,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=INTEGER},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      description = #{description,jdbcType=VARCHAR},
+      memory_mb = #{memoryMb,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      root_gb = #{rootGb,jdbcType=INTEGER},
+      swap = #{swap,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      update_at = #{updateAt,jdbcType=TIMESTAMP},
+      uuid = #{uuid,jdbcType=VARCHAR},
+      vcpus = #{vcpus,jdbcType=INTEGER},
+      region = #{region,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getFlavorList" resultMap="BaseResultMap" parameterType="com.gwm.cloudecs.model.entity.Flavor">
+    select
+    <include refid="Base_Column_List" />
+    from flavor
+    where 1=1
+    <if test="region!= null and region != ''">
+      and  region = #{region}
+    </if>
+
+  </select>
+
+
+</mapper>

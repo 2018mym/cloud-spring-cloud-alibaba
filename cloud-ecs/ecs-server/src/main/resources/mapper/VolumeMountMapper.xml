@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gwm.cloudecs.dao.VolumeMountMapper">
+  <resultMap id="BaseResultMap" type="com.gwm.cloudecs.model.entity.VolumeMount">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="attach_mode" jdbcType="INTEGER" property="attachMode" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt" />
+    <result column="instance_id" jdbcType="VARCHAR" property="instanceId" />
+    <result column="mountpoint" jdbcType="VARCHAR" property="mountpoint" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="volume_id" jdbcType="VARCHAR" property="volumeId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, attach_mode, create_at, deleted, deleted_at, instance_id, mountpoint, update_at, 
+    uuid, volume_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from volume_mount
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByInstanceId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from volume_mount
+    where instance_id = #{instanceId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from volume_mount
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gwm.cloudecs.model.entity.VolumeMount">
+    insert into volume_mount (id, attach_mode, create_at, 
+      deleted, deleted_at, instance_id, 
+      mountpoint, update_at, uuid, 
+      volume_id)
+    values (#{id,jdbcType=INTEGER}, #{attachMode,jdbcType=INTEGER}, now(),
+      0, #{deletedAt,jdbcType=TIMESTAMP}, #{instanceId,jdbcType=VARCHAR},
+      #{mountpoint,jdbcType=VARCHAR}, #{updateAt,jdbcType=TIMESTAMP}, #{uuid,jdbcType=VARCHAR}, 
+      #{volumeId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gwm.cloudecs.model.entity.VolumeMount">
+    insert into volume_mount
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="attachMode != null">
+        attach_mode,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="deletedAt != null">
+        deleted_at,
+      </if>
+      <if test="instanceId != null">
+        instance_id,
+      </if>
+      <if test="mountpoint != null">
+        mountpoint,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="volumeId != null">
+        volume_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="attachMode != null">
+        #{attachMode,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="deletedAt != null">
+        #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="instanceId != null">
+        #{instanceId,jdbcType=VARCHAR},
+      </if>
+      <if test="mountpoint != null">
+        #{mountpoint,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="volumeId != null">
+        #{volumeId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gwm.cloudecs.model.entity.VolumeMount">
+    update volume_mount
+    <set>
+      <if test="attachMode != null">
+        attach_mode = #{attachMode,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="deletedAt != null">
+        deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="instanceId != null">
+        instance_id = #{instanceId,jdbcType=VARCHAR},
+      </if>
+      <if test="mountpoint != null">
+        mountpoint = #{mountpoint,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uuid != null">
+        uuid = #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="volumeId != null">
+        volume_id = #{volumeId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gwm.cloudecs.model.entity.VolumeMount">
+    update volume_mount
+    set attach_mode = #{attachMode,jdbcType=INTEGER},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=INTEGER},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      instance_id = #{instanceId,jdbcType=VARCHAR},
+      mountpoint = #{mountpoint,jdbcType=VARCHAR},
+      update_at = #{updateAt,jdbcType=TIMESTAMP},
+      uuid = #{uuid,jdbcType=VARCHAR},
+      volume_id = #{volumeId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="deleteByVolumeAndInstances" >
+    update volume_mount
+    set
+      deleted = 1,
+      deleted_at = now()
+    where instance_id = #{instanceId} and volume_id = #{volumeId}
+  </update>
+  <select id="selectByVolumeId"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from volume_mount
+    where deleted = 0 and  volume_id = #{volumeId}
+  </select>
+  <select id="selectByattId"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from volume_mount
+    where uuid = #{attachmentId} and deleted = 0
+  </select>
+</mapper>

@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gwm.cloudecs.dao.KeyPairsMapper">
+  <resultMap id="BaseResultMap" type="com.gwm.cloudecs.model.entity.KeyPairs">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt" />
+    <result column="env" jdbcType="VARCHAR" property="env" />
+    <result column="fingerprint" jdbcType="VARCHAR" property="fingerprint" />
+    <result column="key_type" jdbcType="VARCHAR" property="keyType" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="project_id" jdbcType="VARCHAR" property="projectId" />
+    <result column="public_key" jdbcType="VARCHAR" property="publicKey" />
+    <result column="region" jdbcType="VARCHAR" property="region" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="zone" jdbcType="VARCHAR" property="zone" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_at, deleted, deleted_at, env, fingerprint, key_type, name, project_id, 
+    public_key, region, type, update_at, user_id, uuid, zone
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from key_pairs
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from key_pairs
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gwm.cloudecs.model.entity.KeyPairs">
+    insert into key_pairs (id, create_at, deleted, 
+      deleted_at, env, fingerprint, 
+      key_type, name, project_id, 
+      public_key, region, type, 
+      update_at, user_id, uuid, 
+      zone)
+    values (#{id,jdbcType=INTEGER}, #{createAt,jdbcType=TIMESTAMP}, #{deleted,jdbcType=INTEGER}, 
+      #{deletedAt,jdbcType=TIMESTAMP}, #{env,jdbcType=VARCHAR}, #{fingerprint,jdbcType=VARCHAR}, 
+      #{keyType,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, 
+      #{publicKey,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{updateAt,jdbcType=TIMESTAMP}, #{userId,jdbcType=VARCHAR}, #{uuid,jdbcType=VARCHAR}, 
+      #{zone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gwm.cloudecs.model.entity.KeyPairs">
+    insert into key_pairs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="deletedAt != null">
+        deleted_at,
+      </if>
+      <if test="env != null">
+        env,
+      </if>
+      <if test="fingerprint != null">
+        fingerprint,
+      </if>
+      <if test="keyType != null">
+        key_type,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="publicKey != null">
+        public_key,
+      </if>
+      <if test="region != null">
+        region,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="zone != null">
+        zone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="deletedAt != null">
+        #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="env != null">
+        #{env,jdbcType=VARCHAR},
+      </if>
+      <if test="fingerprint != null">
+        #{fingerprint,jdbcType=VARCHAR},
+      </if>
+      <if test="keyType != null">
+        #{keyType,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null">
+        #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="publicKey != null">
+        #{publicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null">
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="zone != null">
+        #{zone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gwm.cloudecs.model.entity.KeyPairs">
+    update key_pairs
+    <set>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="deletedAt != null">
+        deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="env != null">
+        env = #{env,jdbcType=VARCHAR},
+      </if>
+      <if test="fingerprint != null">
+        fingerprint = #{fingerprint,jdbcType=VARCHAR},
+      </if>
+      <if test="keyType != null">
+        key_type = #{keyType,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null">
+        project_id = #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="publicKey != null">
+        public_key = #{publicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null">
+        region = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="uuid != null">
+        uuid = #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="zone != null">
+        zone = #{zone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gwm.cloudecs.model.entity.KeyPairs">
+    update key_pairs
+    set create_at = #{createAt,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=INTEGER},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      env = #{env,jdbcType=VARCHAR},
+      fingerprint = #{fingerprint,jdbcType=VARCHAR},
+      key_type = #{keyType,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      project_id = #{projectId,jdbcType=VARCHAR},
+      public_key = #{publicKey,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      update_at = #{updateAt,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=VARCHAR},
+      uuid = #{uuid,jdbcType=VARCHAR},
+      zone = #{zone,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getKeyPairsList" resultMap="BaseResultMap" parameterType="com.gwm.cloudecs.model.DTO.KeyPairsListDTO">
+    select
+    <include refid="Base_Column_List" />
+    from key_pairs
+    where deleted = '0'
+    <if test="name != null and name != ''">
+      <bind name="name" value="'%' + name + '%'"/>
+      and  name like #{name}
+    </if>
+    <if test="env != null and env != ''">
+      <bind name="env" value="'%' + env + '%'"/>
+      and  env like #{env}
+    </if>
+    <if test="region != null and region != ''">
+      <bind name="region" value="'%' + region + '%'"/>
+      and  env like #{env}
+    </if>
+    <if test="groupId != null and groupId != ''">
+      and  project_id  = #{groupId}
+    </if>
+    <if test="userId != null and userId != ''">
+      and  user_id  =  #{userId}
+    </if>
+  </select>
+
+  <select id="getOneKeyPairs" resultMap="BaseResultMap"  parameterType="com.gwm.cloudecs.model.entity.KeyPairs">
+    select
+    <include refid="Base_Column_List" />
+    from key_pairs
+    where deleted = '0'
+    <if test="name != null and name != ''">
+      <bind name="name" value="'%' + name + '%'"/>
+      and  name like #{name}
+    </if>
+    <if test="projectId != null and projectId != ''">
+      and  project_id  = #{projectId}
+    </if>
+    <if test="userId != null and userId != ''">
+      and  user_id  =  #{userId}
+    </if>
+  </select>
+
+</mapper>

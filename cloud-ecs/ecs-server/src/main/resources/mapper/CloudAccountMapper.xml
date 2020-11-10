@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gwm.cloudecs.dao.CloudAccountMapper">
+    <resultMap id="BaseResultMap" type="com.gwm.cloudecs.model.entity.CloudAccount">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <id column="uuid" jdbcType="VARCHAR" property="uuid"/>
+        <result column="create_at" jdbcType="TIMESTAMP" property="createAt"/>
+        <result column="deleted" jdbcType="INTEGER" property="deleted"/>
+        <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt"/>
+        <result column="domain_id" jdbcType="VARCHAR" property="domainId"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="project_id" jdbcType="VARCHAR" property="projectId"/>
+        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="region" jdbcType="VARCHAR" property="region"/>
+        <result column="zone" jdbcType="VARCHAR" property="zone"/>
+        <result column="datacenter" jdbcType="VARCHAR" property="datacenter"/>
+        <result column="datastore" jdbcType="VARCHAR" property="datastore"/>
+        <result column="cluster" jdbcType="VARCHAR" property="cluster"/>
+        <result column="datastore_cluster" jdbcType="VARCHAR" property="datastoreCluster"/>
+        <result column="vm_folder" jdbcType="VARCHAR" property="vmFolder"/>
+        <result column="network" jdbcType="VARCHAR" property="network"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, uuid, create_at, deleted, deleted_at, domain_id, password, project_id, update_at, 
+    url, user_name, type, region, zone, datacenter, datastore, cluster, datastore_cluster, 
+    vm_folder, network
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cloud_account
+        where id = #{id,jdbcType=INTEGER}
+        and uuid = #{uuid,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from cloud_account
+    where id = #{id,jdbcType=INTEGER}
+      and uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.gwm.cloudecs.model.entity.CloudAccount">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into cloud_account (uuid, create_at, deleted,
+        deleted_at, domain_id, password,
+        project_id, update_at, url,
+        user_name, type, region,
+        zone, datacenter, datastore,
+        cluster, datastore_cluster, vm_folder,
+        network)
+        values (#{uuid,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP}, #{deleted,jdbcType=INTEGER},
+        #{deletedAt,jdbcType=TIMESTAMP}, #{domainId,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+        #{projectId,jdbcType=VARCHAR}, #{updateAt,jdbcType=TIMESTAMP}, #{url,jdbcType=VARCHAR},
+        #{userName,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR},
+        #{zone,jdbcType=VARCHAR}, #{datacenter,jdbcType=VARCHAR}, #{datastore,jdbcType=VARCHAR},
+        #{cluster,jdbcType=VARCHAR}, #{datastoreCluster,jdbcType=VARCHAR}, #{vmFolder,jdbcType=VARCHAR},
+        #{network,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.gwm.cloudecs.model.entity.CloudAccount">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into cloud_account
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uuid != null">
+                uuid,
+            </if>
+            <if test="createAt != null">
+                create_at,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="deletedAt != null">
+                deleted_at,
+            </if>
+            <if test="domainId != null">
+                domain_id,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+            <if test="updateAt != null">
+                update_at,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="region != null">
+                region,
+            </if>
+            <if test="zone != null">
+                zone,
+            </if>
+            <if test="datacenter != null">
+                datacenter,
+            </if>
+            <if test="datastore != null">
+                datastore,
+            </if>
+            <if test="cluster != null">
+                cluster,
+            </if>
+            <if test="datastoreCluster != null">
+                datastore_cluster,
+            </if>
+            <if test="vmFolder != null">
+                vm_folder,
+            </if>
+            <if test="network != null">
+                network,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uuid != null">
+                #{uuid,jdbcType=VARCHAR},
+            </if>
+            <if test="createAt != null">
+                #{createAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=INTEGER},
+            </if>
+            <if test="deletedAt != null">
+                #{deletedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="domainId != null">
+                #{domainId,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=VARCHAR},
+            </if>
+            <if test="updateAt != null">
+                #{updateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="region != null">
+                #{region,jdbcType=VARCHAR},
+            </if>
+            <if test="zone != null">
+                #{zone,jdbcType=VARCHAR},
+            </if>
+            <if test="datacenter != null">
+                #{datacenter,jdbcType=VARCHAR},
+            </if>
+            <if test="datastore != null">
+                #{datastore,jdbcType=VARCHAR},
+            </if>
+            <if test="cluster != null">
+                #{cluster,jdbcType=VARCHAR},
+            </if>
+            <if test="datastoreCluster != null">
+                #{datastoreCluster,jdbcType=VARCHAR},
+            </if>
+            <if test="vmFolder != null">
+                #{vmFolder,jdbcType=VARCHAR},
+            </if>
+            <if test="network != null">
+                #{network,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.gwm.cloudecs.model.entity.CloudAccount">
+        update cloud_account
+        <set>
+            <if test="createAt != null">
+                create_at = #{createAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=INTEGER},
+            </if>
+            <if test="deletedAt != null">
+                deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="domainId != null">
+                domain_id = #{domainId,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="projectId != null">
+                project_id = #{projectId,jdbcType=VARCHAR},
+            </if>
+            <if test="updateAt != null">
+                update_at = #{updateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="region != null">
+                region = #{region,jdbcType=VARCHAR},
+            </if>
+            <if test="zone != null">
+                zone = #{zone,jdbcType=VARCHAR},
+            </if>
+            <if test="datacenter != null">
+                datacenter = #{datacenter,jdbcType=VARCHAR},
+            </if>
+            <if test="datastore != null">
+                datastore = #{datastore,jdbcType=VARCHAR},
+            </if>
+            <if test="cluster != null">
+                cluster = #{cluster,jdbcType=VARCHAR},
+            </if>
+            <if test="datastoreCluster != null">
+                datastore_cluster = #{datastoreCluster,jdbcType=VARCHAR},
+            </if>
+            <if test="vmFolder != null">
+                vm_folder = #{vmFolder,jdbcType=VARCHAR},
+            </if>
+            <if test="network != null">
+                network = #{network,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+        and uuid = #{uuid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.gwm.cloudecs.model.entity.CloudAccount">
+    update cloud_account
+    set create_at = #{createAt,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=INTEGER},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      domain_id = #{domainId,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      project_id = #{projectId,jdbcType=VARCHAR},
+      update_at = #{updateAt,jdbcType=TIMESTAMP},
+      url = #{url,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
+      zone = #{zone,jdbcType=VARCHAR},
+      datacenter = #{datacenter,jdbcType=VARCHAR},
+      datastore = #{datastore,jdbcType=VARCHAR},
+      cluster = #{cluster,jdbcType=VARCHAR},
+      datastore_cluster = #{datastoreCluster,jdbcType=VARCHAR},
+      vm_folder = #{vmFolder,jdbcType=VARCHAR},
+      network = #{network,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+      and uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+
+    <select id="getRecord" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cloud_account
+        where deleted = '0'
+        and `type` = #{type}
+        and `region` = #{region}
+        and `zone` = #{zone}
+    </select>
+    <select id="getRecordListByType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cloud_account
+        where deleted = '0'
+        <if test="region!= null and region != ''">
+            and  region = #{region}
+        </if>
+        <if test="type!= null and type != ''">
+            and  `type` = #{type}
+        </if>
+    </select>
+</mapper>

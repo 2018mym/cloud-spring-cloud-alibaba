@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gwm.cloudecs.dao.SubnetMapper">
+  <resultMap id="BaseResultMap" type="com.gwm.cloudecs.model.entity.Subnet">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cidr" jdbcType="VARCHAR" property="cidr" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt" />
+    <result column="enable_dhcp" jdbcType="VARCHAR" property="enableDhcp" />
+    <result column="gw_ip" jdbcType="VARCHAR" property="gwIp" />
+    <result column="ip_version" jdbcType="VARCHAR" property="ipVersion" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="netword_id" jdbcType="VARCHAR" property="networdId" />
+    <result column="project_id" jdbcType="VARCHAR" property="projectId" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, cidr, create_at, deleted, deleted_at, enable_dhcp, gw_ip, ip_version, name, netword_id, 
+    project_id, update_at, uuid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from subnet
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from subnet
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gwm.cloudecs.model.entity.Subnet">
+    insert into subnet (id, cidr, create_at, 
+      deleted, deleted_at, enable_dhcp, 
+      gw_ip, ip_version, name, 
+      netword_id, project_id, update_at, 
+      uuid)
+    values (#{id,jdbcType=INTEGER}, #{cidr,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP}, 
+      #{deleted,jdbcType=INTEGER}, #{deletedAt,jdbcType=TIMESTAMP}, #{enableDhcp,jdbcType=VARCHAR}, 
+      #{gwIp,jdbcType=VARCHAR}, #{ipVersion,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{networdId,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, #{updateAt,jdbcType=TIMESTAMP}, 
+      #{uuid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gwm.cloudecs.model.entity.Subnet">
+    insert into subnet
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="cidr != null">
+        cidr,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="deletedAt != null">
+        deleted_at,
+      </if>
+      <if test="enableDhcp != null">
+        enable_dhcp,
+      </if>
+      <if test="gwIp != null">
+        gw_ip,
+      </if>
+      <if test="ipVersion != null">
+        ip_version,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="networdId != null">
+        netword_id,
+      </if>
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+      <if test="uuid != null">
+        uuid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cidr != null">
+        #{cidr,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="deletedAt != null">
+        #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableDhcp != null">
+        #{enableDhcp,jdbcType=VARCHAR},
+      </if>
+      <if test="gwIp != null">
+        #{gwIp,jdbcType=VARCHAR},
+      </if>
+      <if test="ipVersion != null">
+        #{ipVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="networdId != null">
+        #{networdId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null">
+        #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gwm.cloudecs.model.entity.Subnet">
+    update subnet
+    <set>
+      <if test="cidr != null">
+        cidr = #{cidr,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="deletedAt != null">
+        deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableDhcp != null">
+        enable_dhcp = #{enableDhcp,jdbcType=VARCHAR},
+      </if>
+      <if test="gwIp != null">
+        gw_ip = #{gwIp,jdbcType=VARCHAR},
+      </if>
+      <if test="ipVersion != null">
+        ip_version = #{ipVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="networdId != null">
+        netword_id = #{networdId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null">
+        project_id = #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uuid != null">
+        uuid = #{uuid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gwm.cloudecs.model.entity.Subnet">
+    update subnet
+    set cidr = #{cidr,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=INTEGER},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      enable_dhcp = #{enableDhcp,jdbcType=VARCHAR},
+      gw_ip = #{gwIp,jdbcType=VARCHAR},
+      ip_version = #{ipVersion,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      netword_id = #{networdId,jdbcType=VARCHAR},
+      project_id = #{projectId,jdbcType=VARCHAR},
+      update_at = #{updateAt,jdbcType=TIMESTAMP},
+      uuid = #{uuid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

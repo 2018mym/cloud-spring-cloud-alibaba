@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gwm.cloudecs.dao.SnapshotMapper">
+    <resultMap id="BaseResultMap" type="com.gwm.cloudecs.model.entity.Snapshot">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="create_at" jdbcType="TIMESTAMP" property="createAt"/>
+        <result column="deleted" jdbcType="INTEGER" property="deleted"/>
+        <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="env" jdbcType="VARCHAR" property="env"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="progress" jdbcType="VARCHAR" property="progress"/>
+        <result column="project_id" jdbcType="VARCHAR" property="projectId"/>
+        <result column="region" jdbcType="VARCHAR" property="region"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="uuid" jdbcType="VARCHAR" property="uuid"/>
+        <result column="volume_id" jdbcType="VARCHAR" property="volumeId"/>
+        <result column="volume_size" jdbcType="VARCHAR" property="volumeSize"/>
+        <result column="zone" jdbcType="VARCHAR" property="zone"/>
+    </resultMap>
+    <resultMap id="BaseResultMapVO" type="com.gwm.cloudecs.model.VO.SnapshotListVO" extends="BaseResultMap">
+        <result column="volumeName" jdbcType="VARCHAR" property="volumeName"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, create_at, deleted, deleted_at, description, env, name, progress, project_id,
+    region, status, type, update_at, user_id, uuid, volume_id, volume_size, zone
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from snapshot
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from snapshot
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.gwm.cloudecs.model.entity.Snapshot">
+    insert into snapshot (id, create_at, deleted, 
+      deleted_at, description, env, 
+      name, progress, project_id, 
+      region, status, type, 
+      update_at, user_id, uuid, 
+      volume_id, volume_size, zone
+      )
+    values (#{id,jdbcType=INTEGER}, now(), 0,
+      #{deletedAt,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR}, #{env,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{progress,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, 
+      #{region,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{updateAt,jdbcType=TIMESTAMP}, #{userId,jdbcType=VARCHAR}, #{uuid,jdbcType=VARCHAR}, 
+      #{volumeId,jdbcType=VARCHAR}, #{volumeSize,jdbcType=VARCHAR}, #{zone,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.gwm.cloudecs.model.entity.Snapshot">
+        insert into snapshot
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="createAt != null">
+                create_at,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="deletedAt != null">
+                deleted_at,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="env != null">
+                env,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="progress != null">
+                progress,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+            <if test="region != null">
+                region,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="updateAt != null">
+                update_at,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="uuid != null">
+                uuid,
+            </if>
+            <if test="volumeId != null">
+                volume_id,
+            </if>
+            <if test="volumeSize != null">
+                volume_size,
+            </if>
+            <if test="zone != null">
+                zone,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="createAt != null">
+                #{createAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=INTEGER},
+            </if>
+            <if test="deletedAt != null">
+                #{deletedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="env != null">
+                #{env,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="progress != null">
+                #{progress,jdbcType=VARCHAR},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=VARCHAR},
+            </if>
+            <if test="region != null">
+                #{region,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="updateAt != null">
+                #{updateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="uuid != null">
+                #{uuid,jdbcType=VARCHAR},
+            </if>
+            <if test="volumeId != null">
+                #{volumeId,jdbcType=VARCHAR},
+            </if>
+            <if test="volumeSize != null">
+                #{volumeSize,jdbcType=VARCHAR},
+            </if>
+            <if test="zone != null">
+                #{zone,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.gwm.cloudecs.model.entity.Snapshot">
+        update snapshot
+        <set>
+            <if test="createAt != null">
+                create_at = #{createAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=INTEGER},
+            </if>
+            <if test="deletedAt != null">
+                deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="env != null">
+                env = #{env,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="progress != null">
+                progress = #{progress,jdbcType=VARCHAR},
+            </if>
+            <if test="projectId != null">
+                project_id = #{projectId,jdbcType=VARCHAR},
+            </if>
+            <if test="region != null">
+                region = #{region,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="updateAt != null">
+                update_at = #{updateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="uuid != null">
+                uuid = #{uuid,jdbcType=VARCHAR},
+            </if>
+            <if test="volumeId != null">
+                volume_id = #{volumeId,jdbcType=VARCHAR},
+            </if>
+            <if test="volumeSize != null">
+                volume_size = #{volumeSize,jdbcType=VARCHAR},
+            </if>
+            <if test="zone != null">
+                zone = #{zone,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.gwm.cloudecs.model.entity.Snapshot">
+    update snapshot
+    set create_at = #{createAt,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=INTEGER},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      description = #{description,jdbcType=VARCHAR},
+      env = #{env,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      progress = #{progress,jdbcType=VARCHAR},
+      project_id = #{projectId,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      update_at = #{updateAt,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=VARCHAR},
+      uuid = #{uuid,jdbcType=VARCHAR},
+      volume_id = #{volumeId,jdbcType=VARCHAR},
+      volume_size = #{volumeSize,jdbcType=VARCHAR},
+      zone = #{zone,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="snapshotList" parameterType="com.gwm.cloudecs.model.DTO.SnapshotListDTO" resultMap="BaseResultMapVO">
+        select
+        s.id, s.create_at, s.description, s.env, s.name, s.progress, s.project_id,
+        s.region, s.status, s.type, s.update_at, s.user_id, s.uuid, s.volume_id, s.volume_size, s.zone, v.name AS
+        volumeName
+        from snapshot s
+        left join volume v on v.uuid = s.volume_id
+        where s.deleted = 0
+        <if test="env != null and env != ''">
+            and s.env = #{env}
+        </if>
+        <if test="zone != null and zone != ''">
+            and s.`zone` = #{zone}
+        </if>
+        <if test="type != null and  type != ''">
+            and s.`type` = #{type}
+        </if>
+        <if test="region != null and  region != ''">
+            and s.region = #{region}
+        </if>
+        <if test="groupId != null and  groupId != ''">
+            and s.project_id = #{groupId}
+        </if>
+        <if test="name != null and name != ''">
+            <bind name="name" value="'%' + name + '%'"/>
+            and s.`name` like #{name}
+        </if>
+        order by s.create_at DESC
+    </select>
+    <select id="getVolumeCount" resultType="map">
+    select
+    uuid, name
+    from snapshot
+    where deleted = 0 and  volume_id = #{volumeId}
+  </select>
+    <select id="selectBySnapshotId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from snapshot
+        where deleted = 0 and uuid = #{uuid}
+    </select>
+
+</mapper>

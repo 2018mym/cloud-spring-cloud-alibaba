@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gwm.cloudstreamsets.dao.StreamSetsMapper">
+  <resultMap id="BaseResultMap" type="com.gwm.cloudstreamsets.model.entity.StreamSets">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="host" jdbcType="VARCHAR" property="host" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="host" jdbcType="VARCHAR" property="host" />
+    <result column="task_id"   jdbcType="INTEGER" property="taskId" />
+      <result column="area_id"   jdbcType="INTEGER" property="areaId" />
+    <result column="install_state" jdbcType="VARCHAR" property="installState"/>
+    <result column="instances_id" jdbcType="VARCHAR" property="instancesId"/>
+    <result column="env" jdbcType="VARCHAR" property="env"/>
+    <result column="region" jdbcType="VARCHAR" property="region"/>
+    <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+    <result column="group_id" jdbcType="VARCHAR" property="groupId"/>
+    <result column="vcpus" jdbcType="INTEGER" property="vcpus"/>
+    <result column="memory_mb" jdbcType="INTEGER" property="memoryMb"/>
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+    <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt"/>
+    <result column="deleted" jdbcType="INTEGER" property="deleted"/>
+    <result column="host_id" jdbcType="INTEGER" property="hostId"/>
+    <result column="ticket" jdbcType="VARCHAR" property="ticket"/>
+    <result column="zone" jdbcType="VARCHAR" property="zone"/>
+     <result column="retry" jdbcType="INTEGER" property="retry"/>
+  </resultMap>
+
+   <sql id="Base_Column_List">id,uuid,name,host,port,state,type,area_id,task_id,install_state,instances_id,env,region,user_id,group_id,
+vcpus,memory_mb,created_at,updated_at,deleted_at,deleted,host_id,ticket,zone,retry</sql>
+    <sql id="Base_Column_List_select">id,uuid,name,host,port,state,type,area_id,task_id,install_state,instances_id,env,region,user_id,group_id,
+vcpus,memory_mb,created_at,updated_at,deleted_at,deleted,host_id,zone,retry</sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List_select" />
+    from cloud_streamsets
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+
+    <select id="getStreamSetsList" parameterType="com.gwm.cloudstreamsets.model.dto.StreamsetsListDTO" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List_select"/>
+        from cloud_streamsets
+        where  deleted = 0
+        <if test="name != null and name != ''">
+            <bind name="name" value="'%' + name + '%'"/>
+            and `name` like #{name}
+        </if>
+        <if test="env != null and env != ''">
+            and env = #{env}
+        </if>
+        <if test="type != null and type != ''">
+            and `type` = #{type}
+        </if>
+        <if test="zone != null and zone != ''">
+            and `zone` = #{zone}
+        </if>
+        <if test="region != null and region != ''">
+            and `region` = #{region}
+        </if>
+        <if test="groupId != null and groupId != ''">
+            and `group_id` = #{groupId}
+        </if>
+        <if test="userId != null and userId != ''">
+            and `user_id` = #{userId}
+        </if>
+
+    </select>
+
+  <select id="getInstallStreamSetsList"  parameterType="java.lang.String" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from cloud_streamsets  where  install_state in(${installStateArray})   and deleted = 0
+  </select>
+
+
+  <insert id="insert" parameterType="com.gwm.cloudstreamsets.model.entity.StreamSets">
+    insert into cloud_streamsets (
+    <include refid="Base_Column_List" />
+    )
+    values (
+    #{id,jdbcType=INTEGER},
+    #{uuid,jdbcType=VARCHAR},
+     #{name,jdbcType=VARCHAR},
+     #{host,jdbcType=VARCHAR},
+      #{port,jdbcType=INTEGER},
+      #{state,jdbcType=INTEGER},
+      #{type,jdbcType=VARCHAR},
+      #{areaId,jdbcType=INTEGER},
+      #{taskId,jdbcType=INTEGER},
+      #{installState,jdbcType=VARCHAR},
+      #{instancesId,jdbcType=VARCHAR},
+       #{env,jdbcType=VARCHAR},
+       #{region,jdbcType=VARCHAR},
+       #{userId,jdbcType=VARCHAR},
+       #{groupId,jdbcType=VARCHAR},
+      #{vcpus,jdbcType=INTEGER},
+      #{memoryMb,jdbcType=INTEGER},
+      #{createdAt,jdbcType=TIMESTAMP},
+      #{updatedAt,jdbcType=TIMESTAMP},
+      #{deletedAt,jdbcType=TIMESTAMP},
+      #{deleted,jdbcType=INTEGER},
+      #{hostId,jdbcType=INTEGER},
+      #{ticket,jdbcType=VARCHAR},
+      #{zone,jdbcType=VARCHAR},
+      #{retry,jdbcType=INTEGER}
+       )
+  </insert>
+
+  <update id="update"  parameterType="com.gwm.cloudstreamsets.model.entity.StreamSets">
+  update cloud_streamsets
+    <set>
+        <if test="name != null">
+            name = #{name,jdbcType=VARCHAR},
+        </if>
+        <if test="host != null">
+            host = #{host,jdbcType=VARCHAR},
+        </if>
+        <if test="port != null">
+            port = #{port,jdbcType=VARCHAR},
+        </if>
+        <if test="state != null">
+            state = #{state,jdbcType=INTEGER},
+        </if>
+        <if test="type != null">
+            type = #{type,jdbcType=VARCHAR},
+        </if>
+        <if test="areaId != null">
+            area_id = #{areaId,jdbcType=INTEGER},
+        </if>
+        <if test="taskId != null">
+            task_id = #{taskId,jdbcType=INTEGER},
+        </if>
+        <if test="installState != null">
+            install_state = #{installState,jdbcType=VARCHAR},
+        </if>
+        <if test="instancesId != null">
+            instances_id = #{instancesId,jdbcType=VARCHAR},
+        </if>
+        <if test="env != null">
+            env = #{env,jdbcType=VARCHAR},
+        </if>
+        <if test="region != null">
+            region = #{region,jdbcType=VARCHAR},
+        </if>
+        <if test="userId != null">
+            user_id = #{userId,jdbcType=VARCHAR},
+        </if>
+        <if test="groupId != null">
+            group_id = #{groupId,jdbcType=VARCHAR},
+        </if>
+        <if test="vcpus != null">
+            vcpus = #{vcpus,jdbcType=VARCHAR},
+        </if>
+        <if test="memoryMb != null">
+            memory_mb = #{memoryMb,jdbcType=VARCHAR},
+        </if>
+        <if test="createdAt != null">
+            created_at = #{createdAt,jdbcType=TIMESTAMP},
+        </if>
+        <if test="updatedAt != null">
+            updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+        </if>
+        <if test="deletedAt != null">
+            deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+        </if>
+        <if test="deleted != null">
+            deleted = #{deleted,jdbcType=INTEGER},
+        </if>
+        <if test="ticket != null">
+            ticket = #{ticket,jdbcType=VARCHAR},
+        </if>
+        <if test="hostId != null">
+            host_id = #{hostId,jdbcType=VARCHAR},
+        </if>
+        <if test="zone != null">
+            zone = #{zone,jdbcType=VARCHAR},
+        </if>
+        <if test="retry != null">
+            retry = #{retry,jdbcType=INTEGER},
+        </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+
+  </update>
+  
+</mapper>

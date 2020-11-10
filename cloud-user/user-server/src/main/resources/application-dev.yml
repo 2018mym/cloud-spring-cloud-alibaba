@@ -1,0 +1,50 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    url: jdbc:mysql://10.255.128.190:3306/cloud?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false
+    username: dj
+    password: 1q2w3e4r
+    druid:
+      initial-size: 5 #连接池初始化大小
+      min-idle: 10 #最小空闲连接数
+      max-active: 20 #最大连接数
+      web-stat-filter:
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" #不统计这些请求数据
+      stat-view-servlet: #访问监控网页的登录用户名和密码
+        login-username: druid
+        login-password: druid
+  redis:
+    host: 10.255.128.190 # Redis服务器地址
+    database: 0 # Redis数据库索引（默认为0）
+    port: 6379 # Redis服务器连接端口
+    password: 123456 # Redis服务器连接密码（默认为空）
+    timeout: 300ms # 连接超时时间（毫秒）
+
+bpm:
+  host: http://bpm.test.paas.gwm.cn/flowable-rest/service
+  username: gw00179593
+  password: 123.com
+  tenant-id: TENANT_GWN_CLOUD
+
+user:
+  url: "http://dev.paas.gwm.cn"
+  check: "/api/v1/system/user/power_check"
+  quotas: "/api/v1/system/group/quotas"
+  processDefinitionKey: "aa-bb"
+mybatis:
+  mapper-locations:
+    - classpath:mapper/*.xml
+    - classpath*:com/**/mapper/*.xml
+
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+swagger:
+  enable: true
+
+
+logging:
+  level:
+    root: info #日志配置DEBUG,INFO,WARN,ERROR
+    com.gwm.clouduser: debug

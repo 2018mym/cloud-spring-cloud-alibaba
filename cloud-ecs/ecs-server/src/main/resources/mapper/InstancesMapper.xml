@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gwm.cloudecs.dao.InstancesMapper">
+    <resultMap id="BaseResultMap" type="com.gwm.cloudecs.common.model.entity.Instances">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="create_at" jdbcType="TIMESTAMP" property="createAt"/>
+        <result column="deleted" jdbcType="INTEGER" property="deleted"/>
+        <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="env" jdbcType="VARCHAR" property="env"/>
+        <result column="flavor_id" jdbcType="VARCHAR" property="flavorId"/>
+        <result column="hostname" jdbcType="VARCHAR" property="hostname"/>
+        <result column="image_uuid" jdbcType="VARCHAR" property="imageUuid"/>
+        <result column="ip_addr" jdbcType="VARCHAR" property="ipAddr"/>
+        <result column="memory_mb" jdbcType="INTEGER" property="memoryMb"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="os_type" jdbcType="VARCHAR" property="osType"/>
+        <result column="project_id" jdbcType="VARCHAR" property="projectId"/>
+        <result column="region" jdbcType="VARCHAR" property="region"/>
+        <result column="root_gb" jdbcType="INTEGER" property="rootGb"/>
+        <result column="state" jdbcType="INTEGER" property="state"/>
+        <result column="network" jdbcType="VARCHAR" property="network"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="uuid" jdbcType="VARCHAR" property="uuid"/>
+        <result column="vcpus" jdbcType="INTEGER" property="vcpus"/>
+        <result column="zone" jdbcType="VARCHAR" property="zone"/>
+        <result column="order_id" jdbcType="VARCHAR" property="orderId"/>
+        <result column="price_model" jdbcType="VARCHAR" property="priceModel"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, create_at, deleted, deleted_at, description, env, flavor_id, hostname, image_uuid,
+    ip_addr, memory_mb, name, os_type, project_id, region, root_gb, state, network, type, 
+    update_at, user_id, uuid, vcpus, zone, order_id, price_model
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from instances
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="getInstancesList" parameterType="com.gwm.cloudecs.common.model.DTO.InstancesListDTO" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from instances
+        where deleted = 0
+        <if test="name != null and name != ''">
+            <bind name="name" value="'%' + name + '%'"/>
+            and `name` like #{name}
+        </if>
+        <if test="env != null and env != ''">
+            and env = #{env}
+        </if>
+        <if test="type != null and type != ''">
+            and `type` = #{type}
+        </if>
+        <if test="zone != null and zone != ''">
+            and `zone` = #{zone}
+        </if>
+        <if test="region != null and region != ''">
+            and `region` = #{region}
+        </if>
+        <if test="groupId != null and groupId != ''">
+            and `project_id` = #{groupId}
+        </if>
+        <if test="instanceTypes != null and instanceTypes.size() > 0">
+            and `type`  in
+            <foreach collection="instanceTypes" item="instanceType" separator="," open="(" close=")" index="">
+                #{instanceType}
+            </foreach>
+        </if>
+
+        order by create_at DESC
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from instances
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.gwm.cloudecs.common.model.entity.Instances" useGeneratedKeys="true" keyProperty="id">
+    insert into instances (create_at, deleted,
+      deleted_at, description, env, 
+      flavor_id, hostname, image_uuid, 
+      ip_addr, memory_mb, name, 
+      os_type, project_id, region, 
+      root_gb, state, network, 
+      type, update_at, user_id, 
+      uuid, vcpus, zone, order_id, price_model)
+    values ( #{createAt,jdbcType=TIMESTAMP}, #{deleted,jdbcType=INTEGER},
+      #{deletedAt,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR}, #{env,jdbcType=VARCHAR}, 
+      #{flavorId,jdbcType=VARCHAR}, #{hostname,jdbcType=VARCHAR}, #{imageUuid,jdbcType=VARCHAR}, 
+      #{ipAddr,jdbcType=VARCHAR}, #{memoryMb,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{osType,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, 
+      #{rootGb,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{network,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{updateAt,jdbcType=TIMESTAMP}, #{userId,jdbcType=VARCHAR}, 
+      #{uuid,jdbcType=VARCHAR}, #{vcpus,jdbcType=INTEGER}, #{zone,jdbcType=VARCHAR},
+       #{orderId,jdbcType=VARCHAR}, #{priceModel,jdbcType=VARCHAR})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.gwm.cloudecs.common.model.entity.Instances">
+    update instances
+    set create_at = #{createAt,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=INTEGER},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      description = #{description,jdbcType=VARCHAR},
+      env = #{env,jdbcType=VARCHAR},
+      flavor_id = #{flavorId,jdbcType=VARCHAR},
+      hostname = #{hostname,jdbcType=VARCHAR},
+      image_uuid = #{imageUuid,jdbcType=VARCHAR},
+      ip_addr = #{ipAddr,jdbcType=VARCHAR},
+      memory_mb = #{memoryMb,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      os_type = #{osType,jdbcType=VARCHAR},
+      project_id = #{projectId,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
+      root_gb = #{rootGb,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      network = #{network,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      update_at = #{updateAt,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=VARCHAR},
+      uuid = #{uuid,jdbcType=VARCHAR},
+      vcpus = #{vcpus,jdbcType=INTEGER},
+      zone = #{zone,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      price_model = #{priceModel,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <update id="updateInstanceStatus">
+    update instances
+    set
+      state = #{state},
+      update_at = now()
+    where  uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+    <select id="selectByUuid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from instances
+        where uuid = #{instanceId}
+    </select>
+
+    <select id="totalInstanceByProjectId" resultType="com.gwm.cloudecs.model.VO.InstanceTotalListVO"
+            parameterType="com.gwm.cloudecs.model.DTO.ResourceTotalListDTO">
+        select
+        sum(vcpus) as vcpus,
+        sum(memory_mb) as memory,
+        count(id) as instanceConut
+        from instances
+        where deleted = '0'
+        <if test="env != null and env != ''">
+            and env = #{env}
+        </if>
+        <if test="region != null and region != ''">
+            and region = #{region}
+        </if>
+        <if test="groupId != null and groupId != ''">
+            and project_id = #{groupId}
+        </if>
+        group by project_id
+    </select>
+ <select id="selectByIpaddr" resultType="int">
+        select
+        1
+        from instances
+        where deleted = 0  and project_id = #{projectId}
+        <if test="uuid != null and uuid != ''">
+            and uuid = #{uuid}
+        </if>
+        <if test="ipaddr != null and ipaddr != ''">
+            and ip_addr = #{ipaddr}
+        </if>
+        limit 1
+    </select>
+
+    <select id="selectBydeleteInstance" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from instances
+        where deleted = 0 and `type` = "aliyun"
+    </select>
+</mapper>

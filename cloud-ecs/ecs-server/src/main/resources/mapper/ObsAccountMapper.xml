@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gwm.cloudecs.dao.ObsAccountMapper">
+  <resultMap id="BaseResultMap" type="com.gwm.cloudecs.model.entity.ObsAccount">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="access_key" jdbcType="VARCHAR" property="accessKey" />
+    <result column="ceph_user" jdbcType="VARCHAR" property="cephUser" />
+    <result column="create_at" jdbcType="VARCHAR" property="createAt" />
+    <result column="deleted" jdbcType="VARCHAR" property="deleted" />
+    <result column="deleted_at" jdbcType="VARCHAR" property="deletedAt" />
+    <result column="job_num" jdbcType="VARCHAR" property="jobNum" />
+    <result column="quota" jdbcType="INTEGER" property="quota" />
+    <result column="secret_key" jdbcType="VARCHAR" property="secretKey" />
+    <result column="update_at" jdbcType="VARCHAR" property="updateAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, access_key, ceph_user, create_at, deleted, deleted_at, job_num, quota, secret_key, 
+    update_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from obs_account
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from obs_account
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gwm.cloudecs.model.entity.ObsAccount">
+    insert into obs_account (id, access_key, ceph_user, 
+      create_at, deleted, deleted_at, 
+      job_num, quota, secret_key, 
+      update_at)
+    values (#{id,jdbcType=INTEGER}, #{accessKey,jdbcType=VARCHAR}, #{cephUser,jdbcType=VARCHAR}, 
+      #{createAt,jdbcType=VARCHAR}, #{deleted,jdbcType=VARCHAR}, #{deletedAt,jdbcType=VARCHAR}, 
+      #{jobNum,jdbcType=VARCHAR}, #{quota,jdbcType=INTEGER}, #{secretKey,jdbcType=VARCHAR}, 
+      #{updateAt,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gwm.cloudecs.model.entity.ObsAccount">
+    insert into obs_account
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="accessKey != null">
+        access_key,
+      </if>
+      <if test="cephUser != null">
+        ceph_user,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="deletedAt != null">
+        deleted_at,
+      </if>
+      <if test="jobNum != null">
+        job_num,
+      </if>
+      <if test="quota != null">
+        quota,
+      </if>
+      <if test="secretKey != null">
+        secret_key,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="accessKey != null">
+        #{accessKey,jdbcType=VARCHAR},
+      </if>
+      <if test="cephUser != null">
+        #{cephUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedAt != null">
+        #{deletedAt,jdbcType=VARCHAR},
+      </if>
+      <if test="jobNum != null">
+        #{jobNum,jdbcType=VARCHAR},
+      </if>
+      <if test="quota != null">
+        #{quota,jdbcType=INTEGER},
+      </if>
+      <if test="secretKey != null">
+        #{secretKey,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gwm.cloudecs.model.entity.ObsAccount">
+    update obs_account
+    <set>
+      <if test="accessKey != null">
+        access_key = #{accessKey,jdbcType=VARCHAR},
+      </if>
+      <if test="cephUser != null">
+        ceph_user = #{cephUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedAt != null">
+        deleted_at = #{deletedAt,jdbcType=VARCHAR},
+      </if>
+      <if test="jobNum != null">
+        job_num = #{jobNum,jdbcType=VARCHAR},
+      </if>
+      <if test="quota != null">
+        quota = #{quota,jdbcType=INTEGER},
+      </if>
+      <if test="secretKey != null">
+        secret_key = #{secretKey,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gwm.cloudecs.model.entity.ObsAccount">
+    update obs_account
+    set access_key = #{accessKey,jdbcType=VARCHAR},
+      ceph_user = #{cephUser,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=VARCHAR},
+      deleted = #{deleted,jdbcType=VARCHAR},
+      deleted_at = #{deletedAt,jdbcType=VARCHAR},
+      job_num = #{jobNum,jdbcType=VARCHAR},
+      quota = #{quota,jdbcType=INTEGER},
+      secret_key = #{secretKey,jdbcType=VARCHAR},
+      update_at = #{updateAt,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getObsAccountList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from obs_account
+    where deleted = '0'
+    <if test="jobNum != null and jobNum != ''">
+      <bind name="jobNum" value="'%' + jobNum + '%'"/>
+      and  job_num like #{jobNum}
+    </if>
+  </select>
+</mapper>
