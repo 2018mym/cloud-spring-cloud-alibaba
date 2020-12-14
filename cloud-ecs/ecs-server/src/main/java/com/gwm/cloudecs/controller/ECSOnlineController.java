@@ -32,8 +32,8 @@ public class ECSOnlineController {
             // Create and initialize a DefaultAcsClient instance
             DefaultProfile profile = DefaultProfile.getProfile(
                     "cn-beijing",          // The region ID
-                    "LTAI4GBGmkd5yuojsua4oK1K",      // The AccessKey ID of the RAM account
-                    "PzSgLCPo7TSk52YXiaukJXHxXJte1W"); // The AccessKey Secret of the RAM account
+                    "xxxx",      // The AccessKey ID of the RAM account
+                    "xxx"); // The AccessKey Secret of the RAM account
             // 创建并初始化DefaultAcsClient实例。
             IAcsClient  client = new DefaultAcsClient(profile);
 
