@@ -44,8 +44,8 @@ rsas:
 
 #aliyun ak
 aliyun:
-  accessKeyId: "LTAI4GBGmkd5yuojsua4oK1K"
-  secret: "PzSgLCPo7TSk52YXiaukJXHxXJte1W"
+  accessKeyId: "xxxx"
+  secret: "xxxxx"
   regionId: "cn-beijing"
 
 mybatis:
